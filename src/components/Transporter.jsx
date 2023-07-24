@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import ReplyToOrderModal from './ReplyToOrderModal';
 
 function Transporter() {
     const [filter, setFilter] = useState('orderId');
+    const [viewReplyToOrderModal, setViewReplyToOrderModal] = useState(false);
 
   return (
     <div className='h-screen'>
@@ -40,10 +42,16 @@ function Transporter() {
                     </div>
                 </div>
                 <div className='w-full h-[60px] bg-[#1b1b1b] flex items-center justify-center'>
-                    <button className='flex flex-row items-center justify-center bg-[#fffcd1] px-3 py-1 rounded-md '><span className='w-5 h-5 mr-2 bg-green-400 flex items-center justify-center rounded-full pb-[5px] font-bold text-[20px]'>+</span> Reply</button>
+                    <button onClick={()=>{setViewReplyToOrderModal(true)}} className='flex flex-row items-center justify-center bg-[#fffcd1] px-3 py-1 rounded-md '><span className='w-5 h-5 mr-2 bg-green-400 flex items-center justify-center rounded-full pb-[5px] font-bold text-[20px]'>+</span> Reply</button>
                 </div>
             </div>
         </div>
+        {
+            viewReplyToOrderModal && (
+            <div onClick={()=>{setViewReplyToOrderModal(false)}} className='fixed top-0 right-0 left-0 bottom-0 w-screen h-screen bg-[#262626c1] flex items-center justify-center'>
+                    <ReplyToOrderModal setViewReplyToOrderModal={setViewReplyToOrderModal}/>
+            </div>)
+        }
     </div>
   )
 }
