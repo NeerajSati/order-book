@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
 
-function Register({switchPage}) {
+function Register() {
 
   return (
         <div className='bg-[#ffdcdc] flex items-center justify-center min-h-screen'>
