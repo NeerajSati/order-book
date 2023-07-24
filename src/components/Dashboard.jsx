@@ -4,8 +4,8 @@ import Transporter from './Transporter'
 
 function Dashboard() {
   return (
-        <Transporter/>
-        // <Manufacturer/>
+        // <Transporter/>
+        <Manufacturer/>
   )
 }
 

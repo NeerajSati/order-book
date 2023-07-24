@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import CreateOrderModal from './CreateOrderModal';
 
 function Manufacturer() {
     const [filter, setFilter] = useState('orderId');
+    const [viewCreateOrderModal, setViewCreateGroupModal] = useState(false);
   return (
     <div className='h-screen'>
         <div className='h-[60px] bg-[rgb(177,177,177)]'>
@@ -12,10 +14,9 @@ function Manufacturer() {
         <div className='pt-4 h-[60px] flex items-center px-5 text-[16px]'>
             Search: 
             <select onChange={(e)=>{setFilter(e.target.value)}} className='ml-2 outline-none border-2 rounded-md border-gray-400'>
-                <option value="orderId">Order Id</option>
+                <option value="orderId" selected>Order Id</option>
                 <option value="from">From</option>
                 <option value="to">To</option>
-
             </select>
             <input type='text' placeholder={filter === 'orderId' ? 'Order id' : 'Address'} className='ml-3 w-[200px] border-gray-500 outline-none border-2 rounded-md px-2'/>
             <button className='bg-blue-500 rounded-md text-[16px] px-2 ml-3 text-white w-50px'>Search</button>
@@ -39,10 +40,16 @@ function Manufacturer() {
                     </div>
                 </div>
                 <div className='w-full h-[60px] bg-[#1b1b1b] flex items-center justify-center'>
-                    <button className='flex flex-row items-center justify-center bg-[#fffcd1] px-3 py-1 rounded-md '><span className='w-5 h-5 mr-2 bg-green-400 flex items-center justify-center rounded-full pb-[5px] font-bold text-[20px]'>+</span> Create Order</button>
+                    <button onClick={()=>{setViewCreateGroupModal(true)}} className='flex flex-row items-center justify-center bg-[#fffcd1] px-3 py-1 rounded-md '><span className='w-5 h-5 mr-2 bg-green-400 flex items-center justify-center rounded-full pb-[5px] font-bold text-[20px]'>+</span> Create Order</button>
                 </div>
             </div>
         </div>
+        {
+            viewCreateOrderModal && (
+            <div onClick={()=>{setViewCreateGroupModal(false)}} className='fixed top-0 right-0 left-0 bottom-0 w-screen h-screen bg-[#262626c1] flex items-center justify-center'>
+                    <CreateOrderModal setViewCreateGroupModal={setViewCreateGroupModal}/>
+            </div>)
+        }
     </div>
   )
 }
