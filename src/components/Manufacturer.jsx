@@ -25,40 +25,17 @@ function Manufacturer() {
             <div className='h-full flex flex-col justify-between border-2 rounded-md border-gray-500'>
                 <div className='px-5 h-[calc(100%-60px)] pt-2 overflow-y-auto'>
                     <div className='flex flex-row items-center justify-start w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
+                        <div className='text-left max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'>
+                            <span className='font-bold'>Order id:</span> 828282<br/>
+                            <span className='font-bold'>Price:</span> 266<br/>
+                        </div>
                     </div>
                     <div className='flex flex-row items-center justify-end w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
-                    </div>
-                    <div className='flex flex-row items-center justify-start w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
-                    </div>
-                    <div className='flex flex-row items-center justify-end w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
-                    </div>
-                    <div className='flex flex-row items-center justify-start w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
-                    </div>
-                    <div className='flex flex-row items-center justify-end w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
-                    </div>
-                    <div className='flex flex-row items-center justify-start w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
-                    </div>
-                    <div className='flex flex-row items-center justify-end w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
-                    </div>
-                    <div className='flex flex-row items-center justify-start w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
-                    </div>
-                    <div className='flex flex-row items-center justify-end w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
-                    </div>
-                    <div className='flex flex-row items-center justify-start w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
-                    </div>
-                    <div className='flex flex-row items-center justify-end w-full mb-2'>
-                        <div className='text-right max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'><span className='font-bold'>Order id:</span> 828282</div>
+                        <div className='text-left max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'>
+                            <span className='font-bold'>Order id:</span> 263466<br/>
+                            <span className='font-bold'>From:</span> Pune<br/>
+                            <span className='font-bold'>To:</span> Delhi<br/>
+                            </div>
                     </div>
                 </div>
                 <div className='w-full h-[60px] bg-[#1b1b1b] flex items-center justify-center'>
