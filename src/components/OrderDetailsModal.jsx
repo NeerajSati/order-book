@@ -1,7 +1,18 @@
+import axios from 'axios';
 import React, { useRef, useState } from 'react'
+import toast from 'react-hot-toast';
+import { socket } from '../socket';
 
 function OrderDetailsModal({setViewOrderDetailsModal, selectedOrder, canReply}) {
-  return (
+    const [price, setPrice] = useState("")
+    const handleReply = async() =>{
+        setViewOrderDetailsModal(false);
+        socket.emit("reply_to_order",{
+            orderId: selectedOrder.data.orderId, messageId: selectedOrder._id, price
+        })
+        toast.success("Reply created!")
+    }
+    return (
     <div onClick={(e)=>{e.stopPropagation()}} className='py-2 px-2 w-[600px] max-h-[90vh] max-md:w-screen max-md:h-screen max-md:max-h-screen bg-[#ffffff] overflow-y-auto relative'>
         <div className='py-2 pb-5 font-bold w-full text-center text-[20px]'>Order Details!</div>
         <div className='w-full font-bold grid grid-cols-2'>
@@ -23,10 +34,10 @@ function OrderDetailsModal({setViewOrderDetailsModal, selectedOrder, canReply}) 
                 <>
                     <div className='font-bold mt-5'>Send Reply:</div>
                     <div className='w-full flex items-center justify-center mt-2'>
-                        Price: <input className='ml-5 border-b-2 border-gray-300 outline-none font-normal' type="text" placeholder='600'></input>
+                        Price: <input onChange={(e)=>{setPrice(e.target.value)}} className='ml-5 border-b-2 border-gray-300 outline-none font-normal' type="text" placeholder='600'></input>
                     </div>
                     <div className='w-full flex items-center justify-center mt-5'>
-                        <button className='bg-[#09794A] text-white px-4 py-1 rounded-md'>Send Reply</button>
+                        <button onClick={handleReply} className='bg-[#09794A] text-white px-4 py-1 rounded-md'>Send Reply</button>
                     </div>
                 </>
             )

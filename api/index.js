@@ -39,26 +39,26 @@ const io = socketIo(server, {
 io.use(jwtHelper.authenticateSocketConnection);
 io.on('connection', (socket) => {
   socket.emit("hello", "world");
-  socketIdMap[socket.user.email] = socket.id;
+  socketIdMap[socket.user._id] = socket.id;
 
   socket.on('create_order', async (data) => {
-    let {from, to, pickup, transporterEmail, quantity, orderId} = data;
+    let {from, to, pickup, transporterEmail, transporterId, quantity, orderId} = data;
     if(!from || !to || !pickup || !transporterEmail || !quantity || !orderId){
         return;
     }
     const newMessage = new Message({
-      senderId: socket.user._id, receiverId: transporterEmail, isReply: false, data: {orderId, from, to, pickup, transporterEmail, quantity}
+      senderId: socket.user._id, receiverId: transporterId, isReply: false, data: {orderId, from, to, pickup, transporterEmail, quantity}
     })
 
     const savedMessage = await newMessage.save();
 
-    socket.to(socketIdMap[transporterEmail]).emit("order_received", savedMessage);
+    socket.to(socketIdMap[transporterId]).emit("order_received", savedMessage);
     socket.emit("order_sent", savedMessage);
   });
 
   socket.on('reply_to_order', async (data) => {
-      const {messageId, price} = data;
-      if(!messageId || !price){
+      const {messageId, orderId, price} = data;
+      if(!messageId || !orderId || !price){
           return;
       }
 
@@ -68,10 +68,11 @@ io.on('connection', (socket) => {
     }
 
       const newMessage = new Message({
-        senderId: socket.user._id, receiverId: messageDetails.senderId, isReply: true, data: {messageId, price}
+        senderId: socket.user._id, receiverId: messageDetails.senderId, isReply: true, data: {orderId, price}
       })
 
       const savedReply = await newMessage.save();
       socket.to(socketIdMap[messageDetails.senderId]).emit("order_reply_received", savedReply);
+      socket.emit("order_reply_sent", savedReply);
   });
 });

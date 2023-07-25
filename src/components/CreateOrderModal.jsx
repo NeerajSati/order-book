@@ -35,8 +35,9 @@ function CreateOrderModal({setViewCreateOrderModal}) {
         }
         toast.success("Order created!")
         setViewCreateOrderModal(false)
+        const transporterId = transporterList.find((x)=>x.email === transporter)
         socket.emit("create_order",{
-            from: fromAddress, to: toAddress, pickup, transporterEmail: transporter, quantity, orderId
+            from: fromAddress, to: toAddress, pickup, transporterEmail: transporter, transporterId: transporterId._id, quantity, orderId
         })
     }
 

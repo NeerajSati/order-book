@@ -24,15 +24,22 @@ function Dashboard() {
       socket.on('order_sent', function (message) {
         setMessageList((list)=>[...list,{_id: message._id, isReply: false,data:message.data}])
       });
+      socket.on('order_received', function (message) {
+        setMessageList((list)=>[...list,{_id: message._id, isReply: false,data:message.data}])
+      });
+      socket.on('order_reply_received', function (message) {
+        setMessageList((list)=>[...list,{_id: message._id, isReply: true,data:message.data}])
+      });
+      socket.on('order_reply_sent', function (message) {
+        setMessageList((list)=>[...list,{_id: message._id, isReply: true,data:message.data}])
+      });
     }
     const tokenDetailsStored = localStorage.getItem("auth-token-data")
     if(tokenDetailsStored){
       const data = JSON.parse(tokenDetailsStored)
-        setUserRole(data.role)
+      setUserRole(data.role)
+      getMessages()
     }
-
-
-    getMessages()
   },[])
 
   const getMessages = async() => {
@@ -51,7 +58,7 @@ function Dashboard() {
           <Manufacturer messageList={messageList}/>
         )}
         {userRole === 'Transporter' && (
-          <Transporter/>
+          <Transporter messageList={messageList}/>
         )}
         </>
   )
