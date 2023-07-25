@@ -15,3 +15,11 @@ mongoose.connect(process.env.MONGODB_URL)
 const server = app.listen(port, () => {
   console.log(`App is listening on port ${port}`)
 })
+
+const authRoutes = require("./routes/auth");
+const orderRoutes = require("./routes/order");
+const transporterRoutes = require("./routes/transporter");
+
+app.use('/api/auth', authRoutes)
+app.use('/api/order', orderRoutes)
+app.use('/api/transporter', transporterRoutes)
