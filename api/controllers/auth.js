@@ -5,7 +5,7 @@ const salt = bcrypt.genSaltSync(10);
 
 const registerUser = async(req,res)=>{
     try{
-        let {email, password, role} = req.body;
+        let {email, password, role, address} = req.body;
         if(!email){
             return res.status(400).json({success: false, msg: "Email is Required!"})
         }
@@ -15,11 +15,15 @@ const registerUser = async(req,res)=>{
         if(!role || (role !== "Manufacturer" && role !== "Transporter")){
             return res.status(400).json({success: false, msg: "Role is required!"})
         }
+        if(role === "Manufacturer" && !address){
+            return res.status(400).json({success: false, msg: "Address is required for manufacturer!"})
+        }
 
         const hashedPassword = bcrypt.hashSync(password, salt);
         const newUser = new User({
             email,
             role,
+            address,
             password: hashedPassword
         })
         let savedUser = await newUser.save();

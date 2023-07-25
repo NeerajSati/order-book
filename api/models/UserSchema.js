@@ -15,6 +15,9 @@ const userSchema = new Schema({
         type:String,
         required:true,
     },
+    address:{
+        type:String
+    },
 },{timestamps:true});
 
 module.exports = mongoose.model("users", userSchema);
