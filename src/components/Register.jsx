@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios'
+import jwt_decode from "jwt-decode";
 
 function Register() {
     const navigate = useNavigate()
@@ -14,7 +15,7 @@ function Register() {
         const tokenStored = localStorage.getItem("auth-token")
         if(tokenStored){
             toast.success("Already Logged in...")
-            navigate('/')
+            // navigate('/')
         }
     },[])
     const handleRegister = async() =>{
@@ -23,8 +24,11 @@ function Register() {
                 email, password, name, address, role
             })
             localStorage.setItem("auth-token",JSON.stringify(registerUser.data.token))
+            const decodedToken = jwt_decode(registerUser.data.token);
+            localStorage.setItem("auth-token",JSON.stringify(registerUser.data.token))
+            localStorage.setItem("auth-token-data",JSON.stringify(decodedToken))
             toast.success("Registered! Logging you in...")
-            navigate('/')
+            // navigate('/')
         } catch(err){
             if(err?.response?.data?.msg){
                 toast.error(err?.response?.data?.msg)
@@ -56,7 +60,7 @@ function Register() {
                 </div>
                 <div className='mt-5 flex flex-col items-start justify-start max-sm:w-full'>
                     <div className='text-[14px]'>Register as</div>
-                    <select value="Manufacturer" onChange={(e)=>{setRole(e.target.value)}} className='rounded-md mt-2 py-3 pr-10 px-5 border-2 border-black w-[450px] max-sm:w-full'>
+                    <select onChange={(e)=>{setRole(e.target.value)}} className='rounded-md mt-2 py-3 pr-10 px-5 border-2 border-black w-[450px] max-sm:w-full'>
                         <option value="Manufacturer">Manufacturer</option>
                         <option value="Transporter">Transporter</option>
                     </select>
