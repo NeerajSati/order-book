@@ -18,6 +18,8 @@ const server = app.listen(port, () => {
 
 const authRoutes = require("./routes/auth");
 const transporterRoutes = require("./routes/transporter");
+const messageRoutes = require("./routes/message");
 
 app.use('/api/auth', authRoutes)
 app.use('/api/transporter', transporterRoutes)
+app.use('/api/message', messageRoutes)
