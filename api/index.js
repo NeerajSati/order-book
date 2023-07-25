@@ -23,3 +23,54 @@ const messageRoutes = require("./routes/message");
 app.use('/api/auth', authRoutes)
 app.use('/api/transporter', transporterRoutes)
 app.use('/api/message', messageRoutes)
+
+
+
+const socketIo = require("socket.io")
+const jwtHelper = require("./helper/jwtHelper")
+const Message = require("./models/MessageSchema")
+let socketIdMap = {}
+
+const io = socketIo(server, {
+  cors: {
+    origin: "*",
+  },
+});
+io.use(jwtHelper.authenticateSocketConnection);
+io.on('connection', (socket) => {
+  socket.emit("hello", "world");
+  socketIdMap[socket.user._id] = socket.id;
+
+  socket.on('create_order', async (data) => {
+    let {from, to, pickup, transporterId, quantity} = data;
+    if(!from || !to || !pickup || !transporterId || !quantity){
+        return;
+    }
+    const newMessage = new Message({
+      senderId: socket.user._id, receiverId: transporterId, isReply: false, data: {from, to, pickup, transporterId, quantity}
+    })
+
+    const savedMessage = await newMessage.save();
+
+    socket.to(socketIdMap[transporterId]).emit("order_received", savedMessage);
+  });
+
+  socket.on('reply_to_order', async (data) => {
+      const {messageId, price} = data;
+      if(!messageId || !price){
+          return;
+      }
+
+      const messageDetails = await Message.findById(messageId,"senderId")
+      if(!messageDetails || !messageDetails.senderId){
+        return;
+    }
+
+      const newMessage = new Message({
+        senderId: socket.user._id, receiverId: messageDetails.senderId, isReply: true, data: {messageId, price}
+      })
+
+      const savedReply = await newMessage.save();
+      socket.to(socketIdMap[messageDetails.senderId]).emit("order_reply_received", savedReply);
+  });
+});
