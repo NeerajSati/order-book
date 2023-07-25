@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CreateOrderModal from './CreateOrderModal';
 import OrderDetailsModal from './OrderDetailsModal';
+import axios from 'axios';
 
-function Manufacturer() {
+function Manufacturer({messageList}) {
     const [filter, setFilter] = useState('orderId');
     const [viewCreateOrderModal, setViewCreateOrderModal] = useState(false);
     const [viewOrderDetailsModal, setViewOrderDetailsModal] = useState(false);
@@ -27,19 +28,26 @@ function Manufacturer() {
         <div className='px-5 pt-2 h-[calc(100vh-160px)]'>
             <div className='h-full flex flex-col justify-between border-2 rounded-md border-gray-500'>
                 <div className='px-5 h-[calc(100%-60px)] pt-2 overflow-y-auto'>
-                    <div className='flex flex-row items-center justify-start w-full mb-2'>
-                        <div className='text-left max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'>
-                            <span className='font-bold'>Order id:</span> 828282<br/>
-                            <span className='font-bold'>Price:</span> 266<br/>
-                        </div>
-                    </div>
-                    <div className='flex flex-row items-center justify-end w-full mb-2'>
-                        <div onClick={()=>{setViewOrderDetailsModal(true)}} className='text-left max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'>
-                            <span className='font-bold'>Order id:</span> 263466<br/>
-                            <span className='font-bold'>From:</span> Pune<br/>
-                            <span className='font-bold'>To:</span> Delhi<br/>
-                            </div>
-                    </div>
+                    {
+                        messageList && messageList.map((message)=>{
+                            return message.isReply ? (
+                                <div key={message._id} className='flex flex-row items-center justify-start w-full mb-2'>
+                                    <div className='text-left max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'>
+                                        <span className='font-bold'>Order id:</span>{message.data?.orderId}<br/>
+                                        <span className='font-bold'>Price:</span>{message.data?.price}<br/>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div key={message._id} className='flex flex-row items-center justify-end w-full mb-2'>
+                                    <div onClick={()=>{setViewOrderDetailsModal(true)}} className='text-left max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'>
+                                        <span className='font-bold'>Order id:</span> {message.data?.orderId}<br/>
+                                        <span className='font-bold'>From:</span> {message.data?.from}<br/>
+                                        <span className='font-bold'>To:</span> {message.data?.to}<br/>
+                                        </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
                 <div className='w-full h-[60px] bg-[#1b1b1b] flex items-center justify-center'>
                     <button onClick={()=>{setViewCreateOrderModal(true)}} className='flex flex-row items-center justify-center bg-[#fffcd1] px-3 py-1 rounded-md '><span className='w-5 h-5 mr-2 bg-green-400 flex items-center justify-center rounded-full pb-[5px] font-bold text-[20px]'>+</span> Create Order</button>

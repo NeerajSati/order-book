@@ -4,9 +4,11 @@ import toast from 'react-hot-toast';
 import Manufacturer from './Manufacturer'
 import Transporter from './Transporter'
 import { socket } from '../socket';
+import axios from 'axios';
 
 function Dashboard() {
   const [userRole, setUserRole] = useState("")
+  const [messageList, setMessageList] = useState([])
   const navigate = useNavigate()
   useEffect(()=>{
     const tokenStored = localStorage.getItem("auth-token")
@@ -19,18 +21,37 @@ function Dashboard() {
       socket.on('connect', function () {
         console.log("Socket connect!")
       });
+      socket.on('order_sent', function (message) {
+        setMessageList((list)=>{
+          list.push({_id: message._id, isReply: false,data:message.data})
+          return list;
+        })
+      });
     }
     const tokenDetailsStored = localStorage.getItem("auth-token-data")
     if(tokenDetailsStored){
       const data = JSON.parse(tokenDetailsStored)
         setUserRole(data.role)
     }
+
+
+    getMessages()
   },[])
+
+  const getMessages = async() => {
+    const tokenStored = JSON.parse(localStorage.getItem("auth-token"))
+    const messages = await axios.get(process.env.REACT_APP_API_BASE+"/api/message/all",{
+        headers:{
+            "authorization": `Bearer ${tokenStored}`
+        }
+    })
+    setMessageList(messages.data.data)
+  }
   
   return (
         <>
         {userRole === 'Manufacturer' && (
-          <Manufacturer/>
+          <Manufacturer messageList={messageList}/>
         )}
         {userRole === 'Transporter' && (
           <Transporter/>

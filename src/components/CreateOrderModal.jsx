@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { socket } from '../socket';
 import axios from 'axios'
+import toast from 'react-hot-toast';
 
 function CreateOrderModal({setViewCreateOrderModal}) {
     const [orderId, setOrderId] = useState(Date.now());
@@ -28,6 +29,12 @@ function CreateOrderModal({setViewCreateOrderModal}) {
     }
 
     const handleSubmit = () => {
+        if(!orderId || !toAddress || !fromAddress || !pickup || !transporter || !quantity){
+            toast.error("Enter all details!")
+            return;
+        }
+        toast.success("Order created!")
+        setViewCreateOrderModal(false)
         socket.emit("create_order",{
             from: fromAddress, to: toAddress, pickup, transporterId: transporter, quantity, orderId
         })
@@ -57,7 +64,7 @@ function CreateOrderModal({setViewCreateOrderModal}) {
                 <option value="">Choose</option>
                 {
                     transporterList && transporterList.map((el)=>{
-                        return <option value={el._id}>{el.email}</option>
+                        return <option key={el._id} value={el._id}>{el.email}</option>
                     })
                 }
             </select>
