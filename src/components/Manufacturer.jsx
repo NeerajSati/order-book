@@ -6,6 +6,7 @@ import axios from 'axios';
 function Manufacturer({messageList}) {
     const [filter, setFilter] = useState('orderId');
     const [viewCreateOrderModal, setViewCreateOrderModal] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState({})
     const [viewOrderDetailsModal, setViewOrderDetailsModal] = useState(false);
   return (
     <div className='h-screen'>
@@ -39,7 +40,7 @@ function Manufacturer({messageList}) {
                                 </div>
                             ) : (
                                 <div key={message._id} className='flex flex-row items-center justify-end w-full mb-2'>
-                                    <div onClick={()=>{setViewOrderDetailsModal(true)}} className='text-left max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'>
+                                    <div onClick={()=>{setSelectedOrder(message); setViewOrderDetailsModal(true)}} className='text-left max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'>
                                         <span className='font-bold'>Order id:</span> {message.data?.orderId}<br/>
                                         <span className='font-bold'>From:</span> {message.data?.from}<br/>
                                         <span className='font-bold'>To:</span> {message.data?.to}<br/>
@@ -63,7 +64,7 @@ function Manufacturer({messageList}) {
         {
             viewOrderDetailsModal && (
             <div onClick={()=>{setViewOrderDetailsModal(false)}} className='fixed top-0 right-0 left-0 bottom-0 w-screen h-screen bg-[#262626c1] flex items-center justify-center'>
-                    <OrderDetailsModal canReply={false} setViewOrderDetailsModal={setViewOrderDetailsModal}/>
+                    <OrderDetailsModal selectedOrder={selectedOrder} canReply={false} setViewOrderDetailsModal={setViewOrderDetailsModal}/>
             </div>)
         }
     </div>
