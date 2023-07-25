@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Manufacturer from './Manufacturer'
 import Transporter from './Transporter'
+import { socket } from '../socket';
 
 function Dashboard() {
   const [userRole, setUserRole] = useState("")
@@ -12,6 +13,12 @@ function Dashboard() {
     if(!tokenStored){
         toast.error("Please Login first...")
         navigate('/login')
+    } else{
+      socket.auth.token = tokenStored;
+      socket.connect();
+      socket.on('connect', function () {
+        console.log("Socket connect!")
+      });
     }
     const tokenDetailsStored = localStorage.getItem("auth-token-data")
     if(tokenDetailsStored){

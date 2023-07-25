@@ -20,8 +20,8 @@ const jwtAuthenticationMiddleware = (req,res,next) => {
 
 const authenticateSocketConnection = (socket, next) =>{
   try {
-    const bearerToken = socket.handshake.query?.token;
-    const token = bearerToken.split(" ")[1]
+    const bearerToken = socket.handshake.auth?.token;
+    const token = JSON.parse(bearerToken);
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     socket.user = decoded;
   } catch (err) {

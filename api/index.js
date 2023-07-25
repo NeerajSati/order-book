@@ -42,17 +42,18 @@ io.on('connection', (socket) => {
   socketIdMap[socket.user._id] = socket.id;
 
   socket.on('create_order', async (data) => {
-    let {from, to, pickup, transporterId, quantity} = data;
-    if(!from || !to || !pickup || !transporterId || !quantity){
+    let {from, to, pickup, transporterId, quantity, orderId} = data;
+    if(!from || !to || !pickup || !transporterId || !quantity || !orderId){
         return;
     }
     const newMessage = new Message({
-      senderId: socket.user._id, receiverId: transporterId, isReply: false, data: {from, to, pickup, transporterId, quantity}
+      senderId: socket.user._id, receiverId: transporterId, isReply: false, data: {orderId, from, to, pickup, transporterId, quantity}
     })
 
     const savedMessage = await newMessage.save();
 
     socket.to(socketIdMap[transporterId]).emit("order_received", savedMessage);
+    socket.emit("order_sent", savedMessage);
   });
 
   socket.on('reply_to_order', async (data) => {
