@@ -8,6 +8,37 @@ function Manufacturer({messageList}) {
     const [viewCreateOrderModal, setViewCreateOrderModal] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState({})
     const [viewOrderDetailsModal, setViewOrderDetailsModal] = useState(false);
+    const [searchMessages,setSearchMessages] = useState([])
+    const [searchQuery,setSearchQuery] = useState("")
+    useEffect(()=>{
+        handleSearch();
+    },[messageList])
+
+    const handleSearch = () =>{
+        if(searchQuery){
+            if(filter === 'orderId'){
+                const list = messageList.filter((m)=>{
+                    console.log("ok",m)
+                    return m?.data?.orderId && m.data.orderId.toString().includes(searchQuery)
+                })
+                setSearchMessages(list)
+            }
+            if(filter === 'from'){
+                const list = messageList.filter((m)=>{
+                    return m?.data?.from && m.data.from.toString().includes(searchQuery)
+                })
+                setSearchMessages(list)
+            }
+            if(filter === 'to'){
+                const list = messageList.filter((m)=>{
+                    return m?.data?.to && m.data.to.toString().includes(searchQuery)
+                })
+                setSearchMessages(list)
+            }
+        } else{
+            setSearchMessages(messageList);
+        }
+    }
   return (
     <div className='h-screen'>
         <div className='h-[60px] bg-[rgb(177,177,177)]'>
@@ -22,15 +53,15 @@ function Manufacturer({messageList}) {
                 <option value="from">From</option>
                 <option value="to">To</option>
             </select>
-            <input type='text' placeholder={filter === 'orderId' ? 'Order id' : 'Address'} className='ml-3 w-[200px] border-gray-500 outline-none border-2 rounded-md px-2'/>
-            <button className='bg-blue-500 rounded-md text-[16px] px-2 ml-3 text-white w-50px'>Search</button>
+            <input onChange={(e)=>{setSearchQuery(e.target.value)}} type='text' placeholder={filter === 'orderId' ? 'Order id' : 'Address'} className='ml-3 w-[200px] border-gray-500 outline-none border-2 rounded-md px-2'/>
+            <button onClick={handleSearch} className='bg-blue-500 rounded-md text-[16px] px-2 ml-3 text-white w-50px'>Search</button>
         </div>
         <div className='px-5 pt-2 font-bold text-[18px]'>Messages:</div>
         <div className='px-5 pt-2 h-[calc(100vh-160px)]'>
             <div className='h-full flex flex-col justify-between border-2 rounded-md border-gray-500'>
                 <div className='px-5 h-[calc(100%-60px)] pt-2 overflow-y-auto'>
                     {
-                        messageList && messageList.map((message)=>{
+                        searchMessages && searchMessages.map((message)=>{
                             return message.isReply ? (
                                 <div key={message._id} className='flex flex-row items-center justify-start w-full mb-2'>
                                     <div className='text-left max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'>
