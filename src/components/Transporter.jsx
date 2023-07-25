@@ -90,7 +90,7 @@ function Transporter({messageList}) {
         {
             viewReplyToOrderModal && (
             <div onClick={()=>{setViewReplyToOrderModal(false)}} className='fixed top-0 right-0 left-0 bottom-0 w-screen h-screen bg-[#262626c1] flex items-center justify-center'>
-                    <ReplyToOrderModal setViewReplyToOrderModal={setViewReplyToOrderModal}/>
+                    <ReplyToOrderModal messageList={messageList} setViewReplyToOrderModal={setViewReplyToOrderModal}/>
             </div>)
         }
         {
