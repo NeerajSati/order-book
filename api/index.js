@@ -17,9 +17,7 @@ const server = app.listen(port, () => {
 })
 
 const authRoutes = require("./routes/auth");
-const orderRoutes = require("./routes/order");
 const transporterRoutes = require("./routes/transporter");
 
 app.use('/api/auth', authRoutes)
-app.use('/api/order', orderRoutes)
 app.use('/api/transporter', transporterRoutes)

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const {listTransporters} = require("../controllers/transporter")
+const {jwtAuthenticationMiddleware} = require("../helper/jwtHelper");
 
-router.post('/list', listTransporters)
+router.get('/list', jwtAuthenticationMiddleware, listTransporters)
 
 module.exports = router
