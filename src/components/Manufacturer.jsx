@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import CreateOrderModal from './CreateOrderModal';
+import OrderDetailsModal from './OrderDetailsModal';
 
 function Manufacturer() {
     const [filter, setFilter] = useState('orderId');
-    const [viewCreateOrderModal, setViewCreateGroupModal] = useState(false);
+    const [viewCreateOrderModal, setViewCreateOrderModal] = useState(false);
+    const [viewOrderDetailsModal, setViewOrderDetailsModal] = useState(false);
   return (
     <div className='h-screen'>
         <div className='h-[60px] bg-[rgb(177,177,177)]'>
@@ -32,7 +34,7 @@ function Manufacturer() {
                         </div>
                     </div>
                     <div className='flex flex-row items-center justify-end w-full mb-2'>
-                        <div className='text-left max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'>
+                        <div onClick={()=>{setViewOrderDetailsModal(true)}} className='text-left max-w-[50%] bg-[rgb(105,224,161)] rounded-lg p-3 cursor-pointer'>
                             <span className='font-bold'>Order id:</span> 263466<br/>
                             <span className='font-bold'>From:</span> Pune<br/>
                             <span className='font-bold'>To:</span> Delhi<br/>
@@ -40,14 +42,20 @@ function Manufacturer() {
                     </div>
                 </div>
                 <div className='w-full h-[60px] bg-[#1b1b1b] flex items-center justify-center'>
-                    <button onClick={()=>{setViewCreateGroupModal(true)}} className='flex flex-row items-center justify-center bg-[#fffcd1] px-3 py-1 rounded-md '><span className='w-5 h-5 mr-2 bg-green-400 flex items-center justify-center rounded-full pb-[5px] font-bold text-[20px]'>+</span> Create Order</button>
+                    <button onClick={()=>{setViewCreateOrderModal(true)}} className='flex flex-row items-center justify-center bg-[#fffcd1] px-3 py-1 rounded-md '><span className='w-5 h-5 mr-2 bg-green-400 flex items-center justify-center rounded-full pb-[5px] font-bold text-[20px]'>+</span> Create Order</button>
                 </div>
             </div>
         </div>
         {
             viewCreateOrderModal && (
-            <div onClick={()=>{setViewCreateGroupModal(false)}} className='fixed top-0 right-0 left-0 bottom-0 w-screen h-screen bg-[#262626c1] flex items-center justify-center'>
-                    <CreateOrderModal setViewCreateGroupModal={setViewCreateGroupModal}/>
+            <div onClick={()=>{setViewCreateOrderModal(false)}} className='fixed top-0 right-0 left-0 bottom-0 w-screen h-screen bg-[#262626c1] flex items-center justify-center'>
+                    <CreateOrderModal setViewCreateOrderModal={setViewCreateOrderModal}/>
+            </div>)
+        }
+        {
+            viewOrderDetailsModal && (
+            <div onClick={()=>{setViewOrderDetailsModal(false)}} className='fixed top-0 right-0 left-0 bottom-0 w-screen h-screen bg-[#262626c1] flex items-center justify-center'>
+                    <OrderDetailsModal canReply={false} setViewOrderDetailsModal={setViewOrderDetailsModal}/>
             </div>)
         }
     </div>

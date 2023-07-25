@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 
-function CreateOrderModal({setViewCreateGroupModal}) {
+function CreateOrderModal({setViewCreateOrderModal}) {
   return (
     <div onClick={(e)=>{e.stopPropagation()}} className='py-2 px-2 w-[600px] max-h-[90vh] max-md:w-screen max-md:h-screen max-md:max-h-screen bg-[#ffffff] overflow-y-auto relative'>
         <div className='py-2 pb-5 font-bold w-full text-center text-[20px]'>Create a Order</div>
@@ -31,7 +31,7 @@ function CreateOrderModal({setViewCreateGroupModal}) {
         <div className='w-full flex items-center justify-center mt-2'>
             <button className='bg-[#09794A] text-white px-4 py-1 rounded-md'>Create Order</button>
         </div>
-        <div onClick={()=>{setViewCreateGroupModal(false)}} className='absolute top-[20px] right-[20px] text-[25px] cursor-pointer text-[#861a1a]'>x</div>
+        <div onClick={()=>{setViewCreateOrderModal(false)}} className='absolute top-[20px] right-[20px] text-[25px] cursor-pointer text-[#861a1a]'>x</div>
     </div>
   )
 }

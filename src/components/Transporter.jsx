@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import ReplyToOrderModal from './ReplyToOrderModal';
+import OrderDetailsModal from './OrderDetailsModal';
 
 function Transporter() {
     const [filter, setFilter] = useState('orderId');
     const [viewReplyToOrderModal, setViewReplyToOrderModal] = useState(false);
+    const [viewOrderDetailsModal, setViewOrderDetailsModal] = useState(false);
 
   return (
     <div className='h-screen'>
         <div className='h-[60px] bg-[rgb(177,177,177)]'>
             <div className='h-full flex items-center justify-center text-lg font-semibold'>
-                Traansporter Dashboard
+                Transporter Dashboard
             </div>
         </div>
         <div className='pt-4 h-[60px] flex items-center px-5 text-[16px]'>
@@ -28,7 +30,7 @@ function Transporter() {
             <div className='h-full flex flex-col justify-between border-2 rounded-md border-gray-500'>
                 <div className='px-5 h-[calc(100%-60px)] pt-2 overflow-y-auto'>
                     <div className='flex flex-row items-center justify-start w-full mb-2'>
-                        <div className='text-left max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'>
+                        <div onClick={()=>{setViewOrderDetailsModal(true)}} className='text-left max-w-[50%] bg-[rgb(103,172,255)] rounded-lg p-3 cursor-pointer'>
                             <span className='font-bold'>Order id:</span> 263466<br/>
                             <span className='font-bold'>From:</span> Pune<br/>
                             <span className='font-bold'>To:</span> Delhi<br/>
@@ -50,6 +52,12 @@ function Transporter() {
             viewReplyToOrderModal && (
             <div onClick={()=>{setViewReplyToOrderModal(false)}} className='fixed top-0 right-0 left-0 bottom-0 w-screen h-screen bg-[#262626c1] flex items-center justify-center'>
                     <ReplyToOrderModal setViewReplyToOrderModal={setViewReplyToOrderModal}/>
+            </div>)
+        }
+        {
+            viewOrderDetailsModal && (
+            <div onClick={()=>{setViewOrderDetailsModal(false)}} className='fixed top-0 right-0 left-0 bottom-0 w-screen h-screen bg-[#262626c1] flex items-center justify-center'>
+                    <OrderDetailsModal canReply={true} setViewOrderDetailsModal={setViewOrderDetailsModal}/>
             </div>)
         }
     </div>
