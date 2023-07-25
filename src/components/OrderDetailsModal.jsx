@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 
 function OrderDetailsModal({setViewOrderDetailsModal, selectedOrder, canReply}) {
-    console.log(selectedOrder)
   return (
     <div onClick={(e)=>{e.stopPropagation()}} className='py-2 px-2 w-[600px] max-h-[90vh] max-md:w-screen max-md:h-screen max-md:max-h-screen bg-[#ffffff] overflow-y-auto relative'>
         <div className='py-2 pb-5 font-bold w-full text-center text-[20px]'>Order Details!</div>

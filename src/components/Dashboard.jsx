@@ -22,10 +22,7 @@ function Dashboard() {
         console.log("Socket connect!")
       });
       socket.on('order_sent', function (message) {
-        setMessageList((list)=>{
-          list.push({_id: message._id, isReply: false,data:message.data})
-          return list;
-        })
+        setMessageList((list)=>[...list,{_id: message._id, isReply: false,data:message.data}])
       });
     }
     const tokenDetailsStored = localStorage.getItem("auth-token-data")

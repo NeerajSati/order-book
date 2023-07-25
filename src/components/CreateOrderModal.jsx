@@ -36,7 +36,7 @@ function CreateOrderModal({setViewCreateOrderModal}) {
         toast.success("Order created!")
         setViewCreateOrderModal(false)
         socket.emit("create_order",{
-            from: fromAddress, to: toAddress, pickup, transporterId: transporter, quantity, orderId
+            from: fromAddress, to: toAddress, pickup, transporterEmail: transporter, quantity, orderId
         })
     }
 
@@ -64,7 +64,7 @@ function CreateOrderModal({setViewCreateOrderModal}) {
                 <option value="">Choose</option>
                 {
                     transporterList && transporterList.map((el)=>{
-                        return <option key={el._id} value={el._id}>{el.email}</option>
+                        return <option key={el._id} value={el.email}>{el.email}</option>
                     })
                 }
             </select>

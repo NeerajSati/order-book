@@ -18,7 +18,7 @@ function Manufacturer({messageList}) {
         <div className='pt-4 h-[60px] flex items-center px-5 text-[16px]'>
             Search: 
             <select onChange={(e)=>{setFilter(e.target.value)}} className='ml-2 outline-none border-2 rounded-md border-gray-400'>
-                <option value="orderId" selected>Order Id</option>
+                <option value="orderId">Order Id</option>
                 <option value="from">From</option>
                 <option value="to">To</option>
             </select>

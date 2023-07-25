@@ -39,20 +39,20 @@ const io = socketIo(server, {
 io.use(jwtHelper.authenticateSocketConnection);
 io.on('connection', (socket) => {
   socket.emit("hello", "world");
-  socketIdMap[socket.user._id] = socket.id;
+  socketIdMap[socket.user.email] = socket.id;
 
   socket.on('create_order', async (data) => {
-    let {from, to, pickup, transporterId, quantity, orderId} = data;
-    if(!from || !to || !pickup || !transporterId || !quantity || !orderId){
+    let {from, to, pickup, transporterEmail, quantity, orderId} = data;
+    if(!from || !to || !pickup || !transporterEmail || !quantity || !orderId){
         return;
     }
     const newMessage = new Message({
-      senderId: socket.user._id, receiverId: transporterId, isReply: false, data: {orderId, from, to, pickup, transporterId, quantity}
+      senderId: socket.user._id, receiverId: transporterEmail, isReply: false, data: {orderId, from, to, pickup, transporterEmail, quantity}
     })
 
     const savedMessage = await newMessage.save();
 
-    socket.to(socketIdMap[transporterId]).emit("order_received", savedMessage);
+    socket.to(socketIdMap[transporterEmail]).emit("order_received", savedMessage);
     socket.emit("order_sent", savedMessage);
   });
 
