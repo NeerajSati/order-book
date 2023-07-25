@@ -15,7 +15,7 @@ function Register() {
         const tokenStored = localStorage.getItem("auth-token")
         if(tokenStored){
             toast.success("Already Logged in...")
-            // navigate('/')
+            navigate('/')
         }
     },[])
     const handleRegister = async() =>{
@@ -28,7 +28,7 @@ function Register() {
             localStorage.setItem("auth-token",JSON.stringify(registerUser.data.token))
             localStorage.setItem("auth-token-data",JSON.stringify(decodedToken))
             toast.success("Registered! Logging you in...")
-            // navigate('/')
+            navigate('/')
         } catch(err){
             if(err?.response?.data?.msg){
                 toast.error(err?.response?.data?.msg)
